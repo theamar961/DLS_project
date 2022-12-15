@@ -4,34 +4,22 @@ import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.metrics import accuracy_score, f1_score, roc_auc_score
 
+# Merges the last two classes into a single class.
+def merge_classes(data_torch):
 
-def merge_classes(data):
-    """
-    Merges the last two classes into a single class.
+    data_torch.y[data_torch.y==3] = 2
+    return data_torch
+
+# Calculate accuracy, F1 Score, Weighted F1 Score and ROC AUC Score
+def score(y_actual, y_prediction) -> Tuple[float]:
+
+    acc = accuracy_score(y_actual, y_prediction.argmax(dim=1, keepdim=True))
+    f1m = f1_score(y_actual, y_prediction.argmax(dim=1, keepdim=True), average='macro')
+    f1w = f1_score(y_actual, y_prediction.argmax(dim=1, keepdim=True), average='weighted')
+    auc_score = roc_auc_score(y_actual, np.exp(y_prediction), average='macro', multi_class='ovr')
     
-    Args:
-        data: torch_geometric.data.Data object.
-
-    Returns:
-        data: transformed torch_geometric.data.Data object.
-    """
-    data.y[data.y==3] = 2
-    return data
-
-
-def score(y_true, y_pred) -> Tuple[float]:
-    """
-    Calculates the accuracy, macro F1 score, weighted F1 score and the ROC AUC score.
-    
-    Args:
-        y_true (array like) of shape (n_samples) containing true labels.
-        y_pred (array like) of shape (n_samples,n_classes) containing the log softmax probabilities.
-    """
-    accuracy = accuracy_score(y_true, y_pred.argmax(dim=1, keepdim=True))
-    f1_macro = f1_score(y_true, y_pred.argmax(dim=1, keepdim=True), average='macro')
-    f1_weighted = f1_score(y_true, y_pred.argmax(dim=1, keepdim=True), average='weighted')
-    auc = roc_auc_score(y_true, np.exp(y_pred), average='macro', multi_class='ovr')
-    return accuracy, f1_macro, f1_weighted, auc
+   
+    return acc, f1m, f1w, auc_score
 
 
 def make_plot(train: Iterable, test: Iterable, plot_type: str, model_name: str) -> None:
