@@ -14,3 +14,9 @@ Damage, and Destroyed for each building. Over 45,000KM2
 of polygon labeled pre and post-disaster imagery is included
 in the dataset. The xBD dataset is provided in the train, test
 and holdout splits in a 80/10/10% ratio, respectively.
+
+### Steps Involved
+
+1. Data Prep-processing 
+2. Image Segmentation
+3. Damage Classification
