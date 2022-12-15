@@ -19,11 +19,11 @@ and holdout splits in a 80/10/10% ratio, respectively.
 
 1. Data Prep-processing -  where we preprocess the satellite images so that they are model ready, by generating a BW mask. 
 2. Image Segmentation - here we extract patches of buildings present in a satellite image    
-FCDenseNet - https://github.com/GeorgeSeif/Semantic-Segmentation-Suite
+* FCDenseNet - https://github.com/GeorgeSeif/Semantic-Segmentation-Suite
 
-SegFormer - https://huggingface.co/blog/fine-tune-segformer
+* SegFormer - https://huggingface.co/blog/fine-tune-segformer
 
 3. Damage Classification - where we have built a model to assess the extent of damage in post-disaster imagery
-Siamese Network - https://gitlab.com/awadailab/sage-project/-/tree/main
+* Siamese Network - https://gitlab.com/awadailab/sage-project/-/tree/main
 
 
