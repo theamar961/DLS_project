@@ -31,7 +31,6 @@ for subset in subsets:
             os.mkdir(disaster_path)
             print(f'Started disaster {disaster} in subset {subset}.')
         elif os.path.isfile(disaster_path + disaster + '_' + subset[2:-1] + '_labels.csv'):
-            print(f'Disaster {disaster} already completed, skipping to next disaster.')
             continue
         else:
             print(f'Resuming disaster {disaster} in subset {subset}.')
@@ -47,18 +46,18 @@ for subset in subsets:
                 bldg_image_name_post = label.name.split('.')[0] + f'_{index}.png'
                 bldg = wkt.loads(bldg_annotationxy['wkt'])
                 if not os.path.isfile(disaster_path + bldg_image_name_post):
-                    minx, miny, maxx, maxy = bldg.bounds
-                    minx = ceil(minx)
-                    miny = ceil(miny)
-                    maxx = ceil(maxx)
-                    maxy = ceil(maxy)
+                    x1, y1, x2, y2 = bldg.bounds
+                    minx = ceil(x1)
+                    miny = ceil(y1)
+                    maxx = ceil(x2)
+                    maxy = ceil(y2)
                     pre_im_bldg = pre_image[miny:maxy,minx:maxx]
                     post_im_bldg = post_image[miny:maxy,minx:maxx]
                     cv2.imwrite(disaster_path + bldg_image_name_post, post_im_bldg)
                     cv2.imwrite(disaster_path + bldg_image_name_post.replace('_post_','_pre_'), pre_im_bldg)
-                coords = list(bldg.centroid.coords)[0]
+                coord = list(bldg.centroid.coords)[0]
                 bldg_lnglat = wkt.loads(bldg_annotationlnglat['wkt'])
-                lng_lat = list(bldg_lnglat.centroid.coords)[0]
-                class_dict[bldg_image_name_post] = [coords[0], coords[1], lng_lat[0], lng_lat[1], bldg_annotationxy['properties']['subtype']]
-        df = pd.DataFrame.from_dict(class_dict, orient='index', columns=['xcoord', 'ycoord', 'long', 'lat', 'class'])
-        df.to_csv(disaster_path + disaster + '_' + subset[13:-1] + '_labels.csv')
+                lnglat = list(bldg_lnglat.centroid.coords)[0]
+                class_dict[bldg_image_name_post] = [coord[0], coord[1], lnglat[0], lnglat[1], bldg_annotationxy['properties']['subtype']]
+        df_1 = pd.DataFrame.from_dict(class_dict, orient='index', columns=['xcoord', 'ycoord', 'long', 'lat', 'class'])
+        df_1.to_csv(disaster_path + disaster + '_' + subset[13:-1] + '_labels.csv')
