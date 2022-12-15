@@ -35,7 +35,7 @@ starting_epoch = 1
 assert starting_epoch > 0
 
 
-def train(epoch: int) -> Tuple[float]:
+def train(epoch):
     model.train()
     pbar = tqdm(total=len(train_loader))
     pbar.set_description(f'Epoch {epoch:02d}')
@@ -62,7 +62,7 @@ def train(epoch: int) -> Tuple[float]:
 
 
 @torch.no_grad()
-def test(dataloader) -> Tuple[float]:
+def test(dataloader):
     model.eval()
     y_true = []
     y_pred = []
@@ -83,7 +83,7 @@ def test(dataloader) -> Tuple[float]:
 
 
 @torch.no_grad()
-def save_results(hold: bool=False) -> None:
+def save_results(hold: bool=False):
     make_plot(train_loss, test_loss, 'loss', name)
     make_plot(train_acc, test_acc, 'accuracy', name)
     make_plot(train_f1_macro, test_f1_macro, 'macro_f1', name)
