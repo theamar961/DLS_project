@@ -47,12 +47,12 @@ for subset in subsets:
                 bldg = wkt.loads(bldg_annotationxy['wkt'])
                 if not os.path.isfile(disaster_path + bldg_image_name_post):
                     x1, y1, x2, y2 = bldg.bounds
-                    minx = ceil(x1)
-                    miny = ceil(y1)
-                    maxx = ceil(x2)
-                    maxy = ceil(y2)
-                    pre_im_bldg = pre_image[miny:maxy,minx:maxx]
-                    post_im_bldg = post_image[miny:maxy,minx:maxx]
+                    x1 = ceil(x1)
+                    y1 = ceil(y1)
+                    x2 = ceil(x2)
+                    y2 = ceil(y2)
+                    pre_im_bldg = pre_image[y1:y2,x1:x2]
+                    post_im_bldg = post_image[y1:y2,x1:x2]
                     cv2.imwrite(disaster_path + bldg_image_name_post, post_im_bldg)
                     cv2.imwrite(disaster_path + bldg_image_name_post.replace('_post_','_pre_'), pre_im_bldg)
                 coord = list(bldg.centroid.coords)[0]
