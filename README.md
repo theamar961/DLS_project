@@ -2,7 +2,7 @@
 
 This project's goal is to use satellite imagery to understand building damage before and after disasters using the xBD Dataset.
 
-# Dataset
+## Dataset
 
 We are using xBD, which is a large-scale dataset for the ad-
 vancement of change detection and building damage assess-
