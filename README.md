@@ -17,6 +17,6 @@ and holdout splits in a 80/10/10% ratio, respectively.
 
 ### Steps Involved
 
-1. Data Prep-processing 
-2. Image Segmentation
-3. Damage Classification
+1. Data Prep-processing -  where we preprocess the satellite images so that they are model ready, by generating a BW mask. 
+2. Image Segmentation - here we extract patches of buildings present in a satellite image
+3. Damage Classification - where we have built a model to assess the extent of damage in post-disaster imagery
