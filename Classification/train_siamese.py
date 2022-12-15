@@ -100,16 +100,7 @@ def save_results(hold: bool=False) -> None:
     np.save('results/'+name+'_auc_train.npy', train_auc)
     np.save('results/'+name+'_auc_test.npy', test_auc)
     if hold:
-        print('\n\nTrain results for last model.')
-        print(f'Train accuracy: {train_acc[-1]:.4f}')
-        print(f'Train macro F1: {train_f1_macro[-1]:.4f}')
-        print(f'Train weighted F1: {train_f1_weighted[-1]:.4f}')
-        print(f'Train auc: {train_auc[-1]:.4f}')
-        print('\nTest results for last model.')
-        print(f'Test accuracy: {test_acc[-1]:.4f}')
-        print(f'Test macro F1: {test_f1_macro[-1]:.4f}')
-        print(f'Test weighted F1: {test_f1_weighted[-1]:.4f}')
-        print(f'Test auc: {test_auc[-1]:.4f}')
+
         hold_dataset = xBDImages(
             ['datasets/xbd/hold_bldgs/'],
             ['socal-fire'],
@@ -117,28 +108,10 @@ def save_results(hold: bool=False) -> None:
         )
         hold_loader = DataLoader(hold_dataset, batch_size)
         hold_scores = test(hold_loader)
-        print('\nHold results for last model.')
-        print(f'Hold accuracy: {hold_scores[1]:.4f}')
-        print(f'Hold macro F1: {hold_scores[2]:.4f}')
-        print(f'Hold weighted F1: {hold_scores[3]:.4f}')
-        print(f'Hold auc: {hold_scores[4]:.4f}')
-        print('\n\nTrain results for best model.')
-        print(f'Train accuracy: {train_acc[best_epoch-1]:.4f}')
-        print(f'Train macro F1: {train_f1_macro[best_epoch-1]:.4f}')
-        print(f'Train weighted F1: {train_f1_weighted[best_epoch-1]:.4f}')
-        print(f'Train auc: {train_auc[best_epoch-1]:.4f}')
-        print('\nTest results for best model.')
-        print(f'Test accuracy: {test_acc[best_epoch-1]:.4f}')
-        print(f'Test macro F1: {test_f1_macro[best_epoch-1]:.4f}')
-        print(f'Test weighted F1: {test_f1_weighted[best_epoch-1]:.4f}')
-        print(f'Test auc: {test_auc[best_epoch-1]:.4f}')
+
         model.load_state_dict(torch.load(model_path+'_best.pt'))
         hold_scores = test(hold_loader)
-        print('\nHold results for best model.')
-        print(f'Hold accuracy: {hold_scores[1]:.4f}')
-        print(f'Hold macro F1: {hold_scores[2]:.4f}')
-        print(f'Hold weighted F1: {hold_scores[3]:.4f}')
-        print(f'Hold auc: {hold_scores[4]:.4f}')
+
 
 
 if __name__ == "__main__":
@@ -209,8 +182,6 @@ if __name__ == "__main__":
         
         train_loss[epoch-1], train_acc[epoch-1], train_f1_macro[epoch-1],\
             train_f1_weighted[epoch-1], train_auc[epoch-1] = train(epoch)
-        print('**********************************************')
-        print(f'Epoch {epoch:02d}, Train Loss: {train_loss[epoch-1]:.4f}')
     
         torch.save(model.state_dict(), model_path+'_last.pt')
 
@@ -225,5 +196,4 @@ if __name__ == "__main__":
         
         save_results()
     
-    print(f'\nBest test AUC {best_test_auc} at epoch {best_epoch}.\n')
     save_results(hold=True)
