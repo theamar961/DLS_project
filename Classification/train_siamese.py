@@ -191,7 +191,6 @@ if __name__ == "__main__":
         if test_auc[epoch-1] > best_test_auc:
             best_test_auc = test_auc[epoch-1]
             best_epoch = epoch
-            print(f'New best model saved with AUC {best_test_auc} at epoch {best_epoch}.')
             torch.save(model.state_dict(), model_path+'_best.pt')
         
         save_results()
